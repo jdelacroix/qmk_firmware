@@ -86,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_grid(
-  KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
-  KC_NO,  KC_NO,   KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_NO,   KC_KP_7, KC_KP_8, KC_KP_9, KC_NO, KC_NO,
-  KC_NO,  KC_NO,   KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_NO,   KC_KP_4, KC_KP_5, KC_KP_6, KC_NO, KC_NO,
-  KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_NO, KC_NO,
-  KC_NO,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   _______, _______, KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO
+  KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO,
+  KC_NO,    KC_NO,   KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_NO,   KC_KP_7, KC_KP_8, KC_KP_9, KC_NO, KC_NO,
+  KC_NO,    KC_NO,   KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_NO,   KC_KP_4, KC_KP_5, KC_KP_6, KC_NO, KC_NO,
+  _______,  KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_KP_0, KC_KP_1, KC_KP_2, KC_KP_3, KC_NO, _______,
+  KC_NO,    KC_NO,   KC_NO,   KC_NO,   KC_NO,   _______, _______, KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO
 ),
 
 /* Adjust (Lower + Raise)
@@ -117,14 +117,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) { 
+  
   switch (keycode) {
         case LOWER:
           if (record->event.pressed) {
+            // rgblight_enable_noeeprom();
             layer_on(_LOWER);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           } else {
             layer_off(_LOWER);
+            // rgblight_disable_noeeprom();
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
           return false;
@@ -132,9 +135,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RAISE:
           if (record->event.pressed) {
             layer_on(_RAISE);
+            // rgblight_enable_noeeprom();
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           } else {
             layer_off(_RAISE);
+            // rgblight_disable_noeeprom();
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
           return false;
@@ -142,3 +147,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     return true;
 };
+
+//
+
